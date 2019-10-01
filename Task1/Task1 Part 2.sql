@@ -1,35 +1,36 @@
-CREATE DATABASE task2;
+CREATE DATABASE task2_new;
 
-use task2;
+use task2_new;
+
 
 CREATE TABLE Students(
-   Student_ID varchar(15),
-   Fname varchar(45),
-   Lname varchar(45),
+   Student_ID varchar(15) PRIMARY KEY,
+   Fname varchar(45) NOT NULL,
+   Lname varchar(45) NOT NULL,
    Street varchar(45),
-   City varchar(45),
-   Zip_Code varchar(45),
-   DOB datetime,
-   Sex varchar(1),
+   City varchar(45) NOT NULL,
+   Zip_Code varchar(45) NOT NULL,
+   DOB datetime NOT NULL,
+   Sex varchar(1) NOT NULL,
    Category_ID int,
    Nationality varchar(45),
    Special_needs varchar(45),
    Current_status varchar(45),
    Course_ID varchar(45),
    Comments varchar(50),
-   Created_on datetime,
-   Modified_on datetime
+   Created_on datetime NOT NULL,
+   Modified_on datetime NOT NULL
 );
+
 
 CREATE TABLE Courses_Students(
    Student_ID varchar(15),
    Course_ID varchar(15)
 );
 
-Drop table Courses;
 CREATE TABLE Courses(
   Course_ID varchar(15) PRIMARY KEY,
-  Course_Name varchar(255),
+  Course_Name varchar(255) UNIQUE,
   Year varchar(4),
   Instructor_ID varchar(10),
   Room_no varchar(6),
@@ -38,15 +39,15 @@ CREATE TABLE Courses(
 
 
 CREATE TABLE Instructor(
-   Instructor_ID varchar(10) PRIMARY KEY,
+   Instructor_ID varchar(10), /* Related as foreign key with StaffID */
    Dept_ID varchar(10)
 );
 
-Drop table Staff;
+
 CREATE TABLE Staff(
   Staff_id varchar(10) PRIMARY KEY,
-  Fname varchar(45),
-  Lname varchar(45),
+  Fname varchar(45) NOT NULL,
+  Lname varchar(45) NOT NULL,
   Resi_Add varchar(255),
   City varchar(45),
   Zip_code varchar(7),
@@ -54,11 +55,11 @@ CREATE TABLE Staff(
   Sex varchar(1),
   Position varchar(25),
   Phone varchar(20),
-  Created_on datetime,
-  Modified_on datetime
+  Created_on datetime NOT NULL,
+  Modified_on datetime NOT NULL
 );
 
-Drop table Advisor;
+
 CREATE TABLE Advisor(
   Advisor_ID varchar(10), /* Related as foreign key with Staff_ID */
   Dept_ID    varchar(10),
@@ -66,8 +67,8 @@ CREATE TABLE Advisor(
 );
 
 CREATE TABLE Categories(
-  Category_ID INT   PRIMARY KEY,
-  Category_name varchar(45)
+  Category_ID INT  PRIMARY KEY,
+  Category_name varchar(45) NOT NULL UNIQUE
 );
 
 CREATE TABLE Payments(
@@ -80,20 +81,22 @@ CREATE TABLE Payments(
   Modified_on datetime
 );
 
+
 CREATE TABLE Invoices(
   Inv_ID varchar(15) PRIMARY KEY,
-  Inv_date datetime,
+  Inv_date datetime NOT NULL,
   Lease_ID  varchar(45),
   Quarter INT,
-  Student_ID varchar(15),
+  Student_ID varchar(15) NOT NULL,
   Accomodation_type INT,
   First_reminder datetime,
   second_reminder datetime,
   payment_status varchar(1)
 );
 
+
 CREATE TABLE Leases(
-  Lease_ID varchar(25),
+  Lease_ID varchar(25) PRIMARY KEY,
   student_ID varchar(15),
   StartDate datetime,
   EndDate datetime,
@@ -104,9 +107,10 @@ CREATE TABLE Leases(
   Modified_on datetime
 );
 
+
 CREATE TABLE Contacts(
   contact_ID varchar(10) PRIMARY KEY,
-  student_ID varchar(15),
+  student_ID varchar(15) NOT NULL,
   SSN        varchar(15),
   Fname      varchar(45),
   Lname      varchar(45),
@@ -115,28 +119,29 @@ CREATE TABLE Contacts(
   City       varchar(25),
   Zip_Code   varchar(10),
   Phone      varchar(20),
-  Created_on datetime,
-  Modified_on datetime
+  Created_on datetime NOT NULL,
+  Modified_on datetime NOT NULL
 );
 
-drop table Accomodation;
+
 CREATE TABLE Accomodation(
   Accomodation_ID varchar(10) PRIMARY KEY,
-  Student_ID  varchar(15),
-  Manager_ID  varchar(10),
-  Accomodation_type_ID varchar(1),
-  Accomodation_num varchar(5),
-  Room_num varchar(5)
+  Student_ID  varchar(15) NOT NULL,
+  Manager_ID  varchar(10) NOT NULL,
+  Accomodation_type_ID varchar(1) NOT NULL,
+  Accomodation_num varchar(5) NOT NULL,
+  Room_num varchar(5) NOT NULL
 );
 
 CREATE TABLE Accomodation_Type(
   Accomodation_type_ID varchar(1) PRIMARY KEY,
-  Accomodation_type_name varchar(20)
+  Accomodation_type_name varchar(20) UNIQUE
 );
+
 
 CREATE TABLE Hall_of_Resi(
   Hall_ID varchar(5) PRIMARY KEY,
-  Hall_Name varchar(45),
+  Hall_Name varchar(45) UNIQUE,
   Hall_Address varchar(75),
   Hall_phone varchar(20),
   Halls_available int(5),
@@ -144,11 +149,13 @@ CREATE TABLE Hall_of_Resi(
   Accomodation_ID varchar(10)
 );
 
+
 CREATE TABLE Hall_room(
-    Hall_Room_ID int PRIMARY KEY,
-    Hall_ID varchar(5),
-    Monthly_rent varchar(45)
+    Hall_Room_ID int auto_increment PRIMARY KEY,
+    Hall_ID varchar(5) NOT NULL,
+    Monthly_rent varchar(45) NOT NULL
 );
+
 
 CREATE TABLE Flat(
   Flat_Num varchar(5) PRIMARY KEY,
@@ -157,28 +164,30 @@ CREATE TABLE Flat(
   Accomodation_ID varchar(10)
 );
 
+
 CREATE TABLE Flat_room(
-  Flat_Room_ID int PRIMARY KEY,
-  Flat_ID varchar(5),
+  Flat_Room_ID int auto_increment PRIMARY KEY,
+  Flat_ID varchar(5) NOT NULL,
   Max_Persons varchar(45),
-  Monthly_rent varchar(45)
+  Monthly_rent varchar(45) NOT NULL
 );
 
-drop table inspection;
+
 CREATE TABLE Inspection(
-  Inspection_ID varchar(10),
-  Inspector_ID  varchar(45),
-  Date_of_inspection datetime,
+  Inspection_ID varchar(10) PRIMARY KEY,
+  Inspector_ID  varchar(45) NOT NULL,
+  Date_of_inspection datetime NOT NULL,
   Conditional_satisfaction binary,
   Additional_comments varchar(45),
   Inspection_flat_num varchar(45),
-  Created_on  datetime,
-  Modified_on datetime
+  Created_on  datetime NOT NULL,
+  Modified_on datetime NOT NULL
 );
 
+
 CREATE TABLE Office_Location(
-    ID  varchar(5),
-    Location varchar(45)
+    ID  varchar(5) PRIMARY KEY,
+    Location varchar(45) NOT NULL UNIQUE
 );
 
 /* Inserting 10 data for Students table */
@@ -514,25 +523,24 @@ INSERT INTO Hall_Room(Hall_Room_ID, Hall_ID, Monthly_rent)
       Values(202,'112','2500');
 
 INSERT INTO Hall_Room(Hall_Room_ID, Hall_ID, Monthly_rent)
-        Values(101,'113','2500');
+        Values(103,'113','2500');
 
 INSERT INTO Hall_Room(Hall_Room_ID, Hall_ID, Monthly_rent)
-        Values(102,'113','2500');
+        Values(104,'113','2500');
 
 INSERT INTO Hall_Room(Hall_Room_ID, Hall_ID, Monthly_rent)
-        Values(201,'114','2500');
+        Values(203,'114','2500');
 
 INSERT INTO Hall_Room(Hall_Room_ID, Hall_ID, Monthly_rent)
-        Values(202,'114','2500');
+        Values(204,'114','2500');
 
 INSERT INTO Hall_Room(Hall_Room_ID, Hall_ID, Monthly_rent)
-        Values(203,'115','2500');
+        Values(206,'115','2500');
 
 INSERT INTO Hall_Room(Hall_Room_ID, Hall_ID, Monthly_rent)
-      Values(204,'115','2500');
+      Values(205,'115','2500');
 
 /* FINISH ENTERING DATA INTO HALL_ROOM
-
 /* START ENTERING DATA INTO FLAT */
 
 INSERT INTO Flat(Flat_Num, Address, Flats_available, Accomodation_ID)
@@ -719,6 +727,3 @@ INSERT INTO Leases(Lease_ID, student_ID, StartDate,EndDate,Actual_start,Actual_e
           Values('LSE1010','TRIOS1010','2009-10-01','2010-10-01','2009-10-01','2010-10-01',4,'2009-09-30','2009-09-30');
 
 /* FINISHED ENTERING INTO LEASES */
-
-
-
