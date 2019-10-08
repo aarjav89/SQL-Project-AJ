@@ -19,15 +19,11 @@ Answer :
 Save this query as a sql script called Question2.sql to your desktop.
 */
 
-ALTER TABLE OrderDetails
-ALTER COLUMN Quantity int;
-ALTER COLUMN UnitPrice int
 
-
-SELECT Customers.CompanyName, Customers.Address, OrderDetails.OrderID, sum(OrderDetails.UnitPrice * OrderDetails.Quantity) AS 'Total Spent'
+SELECT Customers.CompanyName, Customers.Address, OrderDetails.OrderID, OrderDetails.UnitPrice * OrderDetails.Quantity AS 'Total Spent'
 from Customers
 INNER JOIN Orders on Customers.CustomerID=Orders.CustomerID
-INNER JOIN OrderDetails on Orders.OrderID = OrderDetails.OrderID GROUP BY OrderDetails.OrderID;
+INNER JOIN OrderDetails on Orders.OrderID = OrderDetails.OrderID;
 
 
 
